@@ -4,7 +4,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add JWT Authentication
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -24,12 +24,11 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Add Authorization
+
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Use Authentication and Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 

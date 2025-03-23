@@ -30,12 +30,12 @@ namespace HotelManagement.Application.Services
 
         public async Task<AuthResponseDto> RegisterAsync(RegisterUserDto registerDto)
         {
-            // Check if user already exists
+            
             var userExists = await _userManager.FindByEmailAsync(registerDto.Email);
             if (userExists != null)
                 return new AuthResponseDto { Success = false, Message = "User already exists" };
 
-            // Create a new Guest object
+            
             var user = new Guest
             {
                 UserName = registerDto.Email,
@@ -46,20 +46,20 @@ namespace HotelManagement.Application.Services
                 PersonalNumber = registerDto.PersonalNumber
             };
 
-            // Create the user
+            
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (!result.Succeeded)
                 return new AuthResponseDto { Success = false, Message = "User creation failed" };
 
-            // Ensure the "Guest" role exists
+            
             var roleExists = await _roleManager.RoleExistsAsync("Guest");
             if (!roleExists)
             {
                 await _roleManager.CreateAsync(new IdentityRole("Guest"));
             }
 
-            // Add the user to the "Guest" role
-            await _userManager.AddToRoleAsync(user.Id, "Guest"); // Pass the user ID (user.Id) instead of the user object
+            
+            await _userManager.AddToRoleAsync(user.Id, "Guest"); 
 
             return new AuthResponseDto { Success = true, Message = "User registered successfully" };
         }
@@ -77,11 +77,11 @@ namespace HotelManagement.Application.Services
         public async Task<CurrentUserDTO> GetCurrentUserAsync(ClaimsPrincipal user)
         {
             var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null) return null; // No user ID claim found
+            if (userIdClaim == null) return null; 
 
-            var appUser = await _userManager.FindByIdAsync(userIdClaim.Value); // Find user by ID (no need to parse as int)
+            var appUser = await _userManager.FindByIdAsync(userIdClaim.Value); 
 
-            if (appUser == null) return null; // User not found
+            if (appUser == null) return null; 
 
             return new CurrentUserDTO
             {

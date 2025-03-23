@@ -16,10 +16,10 @@ namespace HotelManagement.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure the Hotel entity (if needed)
+            
             modelBuilder.Entity<Hotel>(entity =>
             {
-                entity.HasKey(h => h.Id); // Primary key
+                entity.HasKey(h => h.Id); 
                 entity.Property(h => h.Name).IsRequired().HasMaxLength(100);
                 entity.Property(h => h.Rating).IsRequired();
                 entity.Property(h => h.Country).IsRequired().HasMaxLength(100);

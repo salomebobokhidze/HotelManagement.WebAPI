@@ -26,7 +26,7 @@ namespace HotelManagement.Infrastructure.Data
             modelBuilder.Entity<Hotel>()
                 .HasOne(h => h.Manager)
                 .WithOne(m => m.Hotel)
-                .HasForeignKey<Manager>(m => m.HotelId) // Correct foreign key
+                .HasForeignKey<Manager>(m => m.HotelId) 
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Hotel - Rooms (1-to-Many)
@@ -57,7 +57,7 @@ namespace HotelManagement.Infrastructure.Data
                 .HasForeignKey(r => r.HotelId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Unique constraints for Manager and Guest fields
+            
             modelBuilder.Entity<Manager>()
                 .HasIndex(m => m.Email)
                 .IsUnique();

@@ -24,13 +24,13 @@ namespace HotelManagement.Infrastructure.Data
 
         public async Task SeedAsync()
         {
-            await _context.Database.MigrateAsync(); // Apply pending migrations
+            await _context.Database.MigrateAsync(); 
 
-            // Seed Roles
+            
             await SeedRoles();
-            // Seed Users
+            
             await SeedUsers();
-            // Seed Hotels, Managers, Rooms, and Reservations
+            
             await SeedHotels();
         }
 
@@ -61,7 +61,7 @@ namespace HotelManagement.Infrastructure.Data
                 var result = await _userManager.CreateAsync(admin, "Admin123!");
                 if (result.Succeeded)
                 {
-                    // Pass the user ID (admin.Id) to AddToRoleAsync
+                    
                     await _userManager.AddToRoleAsync(admin.Id, "Admin");
                 }
             }

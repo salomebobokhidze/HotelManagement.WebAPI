@@ -17,7 +17,7 @@ namespace HotelManagement.Infrastructure.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        // Custom method to get filtered hotels
+        
         public async Task<IEnumerable<Hotel>> GetFilteredHotelsAsync(string filter)
         {
             if (string.IsNullOrEmpty(filter))

@@ -13,13 +13,13 @@ namespace HotelManagement.Core.Services
     {
         private readonly IHotelRepository _hotelRepository;
 
-        // Constructor to initialize the repository via dependency injection
+        
         public HotelService(IHotelRepository hotelRepository)
         {
             _hotelRepository = hotelRepository ?? throw new ArgumentNullException(nameof(hotelRepository));
         }
 
-        // Create a new hotel
+        
         public async Task<HotelDTO> CreateHotelAsync(CreateHotelDTO dto)
         {
             if (dto == null)
@@ -38,7 +38,7 @@ namespace HotelManagement.Core.Services
             return new HotelDTO(hotel);
         }
 
-        // Get a hotel by its ID
+      
         public async Task<HotelDTO> GetHotelByIdAsync(int id)
         {
             if (id <= 0)
@@ -51,14 +51,14 @@ namespace HotelManagement.Core.Services
             return new HotelDTO(hotel);
         }
 
-        // Get all hotels without pagination or filtering
+        
         public async Task<IEnumerable<HotelDTO>> GetAllHotelsAsync()
         {
             var hotels = await _hotelRepository.GetAllAsync();
             return hotels.Select(h => new HotelDTO(h));
         }
 
-        // Get all hotels with pagination and filtering
+        
         public async Task<IEnumerable<HotelDTO>> GetAllHotelsAsync(int page, int pageSize, string filter)
         {
             if (page <= 0)
@@ -77,7 +77,7 @@ namespace HotelManagement.Core.Services
                 hotels = await _hotelRepository.GetAllAsync();
             }
 
-            // Apply pagination
+            
             var paginatedHotels = hotels
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize);
@@ -85,7 +85,7 @@ namespace HotelManagement.Core.Services
             return paginatedHotels.Select(h => new HotelDTO(h));
         }
 
-        // Update an existing hotel
+        
         public async Task<bool> UpdateHotelAsync(int id, UpdateHotelDTO dto)
         {
             if (id <= 0)
@@ -107,7 +107,7 @@ namespace HotelManagement.Core.Services
             return true;
         }
 
-        // Delete a hotel by its ID
+        
         public async Task<bool> DeleteHotelAsync(int id)
         {
             if (id <= 0)
