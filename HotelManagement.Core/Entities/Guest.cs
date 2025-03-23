@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HotelManagement.Core.Entities
 {
     public class Guest : IdentityUser
     {
-        
+
         [Required]
         public string FirstName { get; set; }
 

@@ -5,12 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using HotelManagement.Core.DTOs;
 using HotelManagement.Core.Entities;
-using HotelManagement.Core.Interfaces;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace HotelManagement.Application.Services
 {
@@ -30,12 +25,12 @@ namespace HotelManagement.Application.Services
 
         public async Task<AuthResponseDto> RegisterAsync(RegisterUserDto registerDto)
         {
-            
+
             var userExists = await _userManager.FindByEmailAsync(registerDto.Email);
             if (userExists != null)
                 return new AuthResponseDto { Success = false, Message = "User already exists" };
 
-            
+
             var user = new Guest
             {
                 UserName = registerDto.Email,
@@ -46,20 +41,20 @@ namespace HotelManagement.Application.Services
                 PersonalNumber = registerDto.PersonalNumber
             };
 
-            
+
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (!result.Succeeded)
                 return new AuthResponseDto { Success = false, Message = "User creation failed" };
 
-            
+
             var roleExists = await _roleManager.RoleExistsAsync("Guest");
             if (!roleExists)
             {
                 await _roleManager.CreateAsync(new IdentityRole("Guest"));
             }
 
-            
-            await _userManager.AddToRoleAsync(user.Id, "Guest"); 
+
+            await _userManager.AddToRoleAsync(user, "Guest");
 
             return new AuthResponseDto { Success = true, Message = "User registered successfully" };
         }
@@ -77,11 +72,11 @@ namespace HotelManagement.Application.Services
         public async Task<CurrentUserDTO> GetCurrentUserAsync(ClaimsPrincipal user)
         {
             var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null) return null; 
+            if (userIdClaim == null) return null;
 
-            var appUser = await _userManager.FindByIdAsync(userIdClaim.Value); 
+            var appUser = await _userManager.FindByIdAsync(userIdClaim.Value);
 
-            if (appUser == null) return null; 
+            if (appUser == null) return null;
 
             return new CurrentUserDTO
             {

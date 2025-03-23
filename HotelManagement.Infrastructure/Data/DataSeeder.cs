@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HotelManagement.Core.Entities;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using HotelManagement.Core.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Infrastructure.Data
@@ -24,13 +19,13 @@ namespace HotelManagement.Infrastructure.Data
 
         public async Task SeedAsync()
         {
-            await _context.Database.MigrateAsync(); 
+            await _context.Database.MigrateAsync();
 
-            
+
             await SeedRoles();
-            
+
             await SeedUsers();
-            
+
             await SeedHotels();
         }
 
@@ -61,8 +56,8 @@ namespace HotelManagement.Infrastructure.Data
                 var result = await _userManager.CreateAsync(admin, "Admin123!");
                 if (result.Succeeded)
                 {
-                    
-                    await _userManager.AddToRoleAsync(admin.Id, "Admin");
+
+                    await _userManager.AddToRoleAsync(admin, "Admin");
                 }
             }
         }
